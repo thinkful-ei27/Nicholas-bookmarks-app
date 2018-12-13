@@ -8,8 +8,8 @@ const bookMarkList = (function(){
             <button>Add (book)Mark</button>
             <form>
                 <label>Display Ratings Above:</label>
-                <select id = 'filterRatingSelect'>           
-                    <option value="1">1 Star</option>
+                <select id='filterRatingSelect' class='filterRatingSelect'>           
+                    <option value="1" selected="selected">1 Star</option>
                     <option value="2">2 Stars</option>
                     <option value="3">3 Stars</option>
                     <option value="4">4 Stars</option>
@@ -101,10 +101,9 @@ const bookMarkList = (function(){
 
     //listen on change events
     function handleFilterRating(){
-        $('.add-rating').on('click', 'select', function(){
+        $('#filterRatingSelect').change(function(){
             event.preventDefault();
-            const displayRating = $('select#filterDisplayRating').val();
-            console.log(`Select drop down menu works and displayRating is ${displayRating}`);
+            store.displayRating = $('#filterRatingSelect').val();
         });
     }
 
