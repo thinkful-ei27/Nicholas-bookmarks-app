@@ -11,10 +11,11 @@
     <header role = 'banner'>
         <h1>Thinkful's Book of Marks</h1>
     </header>
-    <div role = 'container' class = 'wide container'>
+    <div role = 'container' class = 'wide container add-rating'>
         <button>Add Bookmark</button>
         <form>
-            <select>
+            <label>Display Ratings Above:</label>
+            <select>           
                 <option value="1">1 Star</option>
                 <option value="2">2 Stars</option>
                 <option value="3">3 Stars</option>
@@ -23,13 +24,17 @@
             </select>
         </form>
     </div>
-    <div role = 'container' id = 'input later' class ='thin container'>
+    <div role = 'container' id = 'input later' class ='bookmark'>
         <h3>Title of Bookmark</h3>
         <p role = 'rating'>****</p>
+        <button>Edit (book)Mark</button>
+        <button>Add (book)Mark</button>
     </div>
-    <div role = 'container' id = 'input later' class ='thin container'>
+    <div role = 'container' id = 'input later' class ='bookmark'>
         <h3>Title of second bookmark</h3>
         <p role = 'rating'>**</p>
+        <button>Edit (book)Mark</button>
+        <button>Add (book)Mark</button>
     </div>
   </body>
   <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
