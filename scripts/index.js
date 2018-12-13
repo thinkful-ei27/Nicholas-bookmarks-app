@@ -18,11 +18,25 @@ const bookMarkList = (function(){
         </div>`;
         }
       }
-    function generateBookMark(bookMarks){
-        return bookMarks.edit ? `<div role = 'container' id = 'input later' class ='bookmark edit'>
+    function bookMarkHTML(bookMarks){
+        return `<div role = 'container' id = 'input later' class ='bookmark'>
+        <h3>${bookMarks.title}</h3>
+        <p role = 'rating'>${bookMarks.rating}</p>`
+        + 
+        (bookMarks.expanded ? 
+        `<p>${bookMarks.desc}</p>
+        <button href=${bookMarks.url}>(book)Mark URL</button>` : '') 
+        + 
+        `<button>Edit (book)Mark</button>
+        <button>Delete (book)Mark</button>
+      </div>`;
+    }
+
+    function bookMarkEditHTML(bookMarks){
+        return `<div role = 'container' id = 'input later' class ='bookmark edit'>
         <form id = "js-editMark">
             <h2>Edit your (book)Mark</h2>
-            <label for = "name">Name</label>
+            <label for = "name">${bookMarks.name}</label>
             <input type = "text" id="createName" name ="name">
             <label>Rating</label>
               <select>           
@@ -39,18 +53,11 @@ const bookMarkList = (function(){
               <button class = "cancel">Cancel</button>
               <button class = "submit">Submit (book)Mark</button>
           </form>
-    </div>` :
-        `<div role = 'container' id = 'input later' class ='bookmark'>
-        <h3>${bookMarks.title}</h3>
-        <p role = 'rating'>${bookMarks.rating}</p>`
-        + 
-        (bookMarks.expanded ? 
-        `<p>${bookMarks.desc}</p>
-        <button href=${bookMarks.url}>(book)Mark URL</button>` : '') 
-        + 
-        `<button>Edit (book)Mark</button>
-        <button>Delete (book)Mark</button>
-      </div>`;
+    </div>` 
+    }
+
+    function generateBookMark(bookMarks){
+        return bookMarks.edit ? bookMarkEditHTML(bookMarks) : bookMarkHTML(bookMarks);
       }
     function render() {
         const addFilter = generateAddSortButtons();
