@@ -1,8 +1,9 @@
 'use strict';
-/* global, api, store */
+/* global, api, store.js */
 const bookMarkList = (function(){
     const testResponse = 'I work';
     function generateBookMark(bookMarks){
+        //should be able to handle edit and expanded formats
         return ` <div role = 'container' id = 'input later' class ='bookmark'>
         <h3>${bookMarks.title}</h3>
         <p role = 'rating'>${bookMarks.rating}</p>
@@ -16,13 +17,9 @@ const bookMarkList = (function(){
     };
 }());
 
-//generateBookMark will need to factor in expanded, maybe edit?
-function generateBookMark(bookMarks){
-  return ` <div role = 'container' id = 'input later' class ='bookmark'>
-  <h3>${bookMarks.title}</h3>
-  <p role = 'rating'>${bookMarks.rating}</p>
-  <button>Edit (book)Mark</button>
-  <button>Delete (book)Mark</button>
-</div>`;
+function render() {
+    const bookMarks = store.items.map(bookMark => bookMarkList.generateBookMark(bookMark));
+    $('body').append(bookMarks);
 }
 
+render();
