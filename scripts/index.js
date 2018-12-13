@@ -19,8 +19,28 @@ const bookMarkList = (function(){
         }
       }
     function generateBookMark(bookMarks){
-        //should be able to handle edit and expanded formats
-        return (`<div role = 'container' id = 'input later' class ='bookmark'>
+        return bookMarks.edit ? `<div role = 'container' id = 'input later' class ='bookmark edit'>
+        <form id = "js-editMark">
+            <h2>Edit your (book)Mark</h2>
+            <label for = "name">Name</label>
+            <input type = "text" id="createName" name ="name">
+            <label>Rating</label>
+              <select>           
+                  <option value="1">1 Star</option>
+                  <option value="2">2 Stars</option>
+                  <option value="3">3 Stars</option>
+                  <option value="4">4 Stars</option>
+                  <option value="5">5 Stars</option> 
+              </select>
+              <label  for = "description">Description</label>
+              <input type = "text" id="createDescription" name="description">
+              <label for ="URL"> URL:</label>
+              <input type = "text" id="createURL" name="URL">
+              <button class = "cancel">Cancel</button>
+              <button class = "submit">Submit (book)Mark</button>
+          </form>
+    </div>` :
+        `<div role = 'container' id = 'input later' class ='bookmark'>
         <h3>${bookMarks.title}</h3>
         <p role = 'rating'>${bookMarks.rating}</p>`
         + 
@@ -30,7 +50,7 @@ const bookMarkList = (function(){
         + 
         `<button>Edit (book)Mark</button>
         <button>Delete (book)Mark</button>
-      </div>`);
+      </div>`;
       }
     function render() {
         const addFilter = generateAddSortButtons();
