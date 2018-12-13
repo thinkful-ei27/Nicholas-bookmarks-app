@@ -7,10 +7,14 @@ const store = (function(){
   let erasedAddFilterMark = false;
   let displayRating = 1;
   let sErr = '';
+
+  function setDisplayRating(value){
+      store.displayRating = value;
+  }
   return {
     items,
     erasedAddFilterMark,
-    displayRating,
+    setDisplayRating,
     sErr
   };
 }());
