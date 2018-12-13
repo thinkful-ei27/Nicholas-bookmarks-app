@@ -6,11 +6,14 @@ body {
   background-color: lightsalmon;
   margin: 0;
   padding: 0;
-
 }
 
 .container {
-  text-align: center;
+  padding: 10px;
+}
+
+.bookmark {
+  margin: 10px;
 }
 
 .add-rating {

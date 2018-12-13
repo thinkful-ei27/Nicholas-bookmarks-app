@@ -8,7 +8,7 @@ const bookMarkList = (function(){
             <button>Add (book)Mark</button>
             <form>
                 <label>Display Ratings Above:</label>
-                <select>           
+                <select id = 'filterRatingSelect'>           
                     <option value="1">1 Star</option>
                     <option value="2">2 Stars</option>
                     <option value="3">3 Stars</option>
@@ -20,7 +20,7 @@ const bookMarkList = (function(){
         }
       }
     function bookMarkHTML(bookMarks){
-        return `<div role = 'container' id = ${bookMarks.id} class ='bookmark no-edit'>
+        return `<div role ='container' id="${bookMarks.id}" class ='bookmark no-edit'>
         <h3>${bookMarks.title}</h3>
         <p role = 'rating'>${bookMarks.rating}</p>`
         + 
@@ -34,11 +34,11 @@ const bookMarkList = (function(){
     }
 
     function bookMarkEditHTML(bookMarks){
-        return `<div role = 'container' id = ${bookMarks.id} class ='bookmark edit'>
-        <form id = "js-editMark">
+        return `<div role='container' id="${bookMarks.id}" class='bookmark edit'>
+        <form id="js-editMark">
             <h2>Edit your (book)Mark</h2>
-            <label for = "name">${bookMarks.name}</label>
-            <input type = "text" id="createName" name ="name">
+            <label for="name">Title</label>
+            <input type="text" id="createName" name ="name" value ="${bookMarks.title}">
             <label>Rating</label>
               <select>           
                   <option value="1">1 Star</option>
@@ -47,14 +47,14 @@ const bookMarkList = (function(){
                   <option value="4">4 Stars</option>
                   <option value="5">5 Stars</option> 
               </select>
-              <label  for = "description">Description</label>
-              <input type = "text" id="createDescription" name="description">
-              <label for ="URL"> URL:</label>
-              <input type = "text" id="createURL" name="URL">
-              <button class = "cancel">Cancel</button>
-              <button class = "submit">Submit (book)Mark</button>
+              <label  for="description">Description</label>
+              <input type="text" id="createDescription" name="description">
+              <label for="URL"> URL:</label>
+              <input type="text" id="createURL" name="URL">
+              <button class="cancel">Cancel</button>
+              <button class="submit">Submit (book)Mark</button>
           </form>
-    </div>` 
+    </div>`;
     }
 
     function generateBookMark(bookMarks){
@@ -69,30 +69,42 @@ const bookMarkList = (function(){
     }
     
     function handleEditButton() {
-        $('.no-edit').on('click', '.edit-button', function(){
+        $('.master').on('click', '.edit-button', function(){
             event.preventDefault();
             console.log('edit button works and responds.');
         })
     };
 
     function handleDeleteButton(){
-        $('.no-edit').on('click', '.delete-button', function(){
+        $('.master').on('click', '.delete-button', function(){
             event.preventDefault();
             console.log('delete button works and response.');
         })
     }
 
     function handleCancelButton(){
-        $('.edit').on('click', '.cancel', function(){
+        $('.master').on('click', '.cancel', function(){
             event.preventDefault();
             console.log('cancel button works and responds.');
         });
     }
 
+    //consider changing to submit
     function handleSubmitButton(){
-        $('.edit').on('click', '.submit', function(){
+        $('.master').on('click', '.submit', function(){
             event.preventDefault();
             console.log('submit button works and responds.');
+        });
+    }
+
+    //next in line is listening for a change in the filter
+
+    //listen on change events
+    function handleFilterRating(){
+        $('.add-rating').on('click', 'select', function(){
+            event.preventDefault();
+            const displayRating = $('select#filterDisplayRating').val();
+            console.log(`Select drop down menu works and displayRating is ${displayRating}`);
         });
     }
 
@@ -102,12 +114,13 @@ const bookMarkList = (function(){
         handleDeleteButton();
         handleCancelButton();
         handleSubmitButton();
+        handleFilterRating();
     }
     function render() {
         const addFilter = generateAddSortButtons();
         const bookMarks = store.items.map(bookMark => bookMarkList.generateBookMark(bookMark));
-        $('body').append(addFilter);
-        $('body').append(bookMarks);
+        $('.master').append(addFilter);
+        $('.master').append(bookMarks);
     };
     return {
         generateBookMark,
