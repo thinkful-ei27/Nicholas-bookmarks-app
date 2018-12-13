@@ -1,6 +1,7 @@
 'use strict';
-/* global, api, store.js */
+/* global $, api, store */
 const bookMarkList = (function(){
+
     function generateAddSortButtons(){
         if(!store.erasedAddFilterMark){
             return `<div role = 'container' class = 'wide container add-rating'>
@@ -59,6 +60,15 @@ const bookMarkList = (function(){
     function generateBookMark(bookMarks){
         return bookMarks.edit ? bookMarkEditHTML(bookMarks) : bookMarkHTML(bookMarks);
       }
+
+    function handleAddButton() {
+        $('.add-rating').on('click', 'button', function(){
+            event.preventDefault();
+            console.log('Add Button Works and Response');
+        });
+    }
+
+
     function render() {
         const addFilter = generateAddSortButtons();
         const bookMarks = store.items.map(bookMark => bookMarkList.generateBookMark(bookMark));
@@ -68,11 +78,13 @@ const bookMarkList = (function(){
     return {
         generateBookMark,
         generateAddSortButtons,
+        handleAddButton,
         render
     };
 }());
 
 bookMarkList.render();
+bookMarkList.handleAddButton();
 
 
 
