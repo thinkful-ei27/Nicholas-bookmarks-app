@@ -20,7 +20,7 @@ const bookMarkList = (function(){
         }
       }
     function bookMarkHTML(bookMarks){
-        return `<div role = 'container' id = 'input later' class ='bookmark'>
+        return `<div role = 'container' id = ${bookMarks.id} class ='bookmark no-edit'>
         <h3>${bookMarks.title}</h3>
         <p role = 'rating'>${bookMarks.rating}</p>`
         + 
@@ -28,13 +28,13 @@ const bookMarkList = (function(){
         `<p>${bookMarks.desc}</p>
         <button href=${bookMarks.url}>(book)Mark URL</button>` : '') 
         + 
-        `<button>Edit (book)Mark</button>
-        <button>Delete (book)Mark</button>
+        `<button class = 'edit-button'>Edit (book)Mark</button>
+        <button class = 'delete-button'>Delete (book)Mark</button>
       </div>`;
     }
 
     function bookMarkEditHTML(bookMarks){
-        return `<div role = 'container' id = 'input later' class ='bookmark edit'>
+        return `<div role = 'container' id = ${bookMarks.id} class ='bookmark edit'>
         <form id = "js-editMark">
             <h2>Edit your (book)Mark</h2>
             <label for = "name">${bookMarks.name}</label>
@@ -64,11 +64,45 @@ const bookMarkList = (function(){
     function handleAddButton() {
         $('.add-rating').on('click', 'button', function(){
             event.preventDefault();
-            console.log('Add Button Works and Response');
+            console.log('Add Button Works and Responds');
+        });
+    }
+    
+    function handleEditButton() {
+        $('.no-edit').on('click', '.edit-button', function(){
+            event.preventDefault();
+            console.log('edit button works and responds.');
+        })
+    };
+
+    function handleDeleteButton(){
+        $('.no-edit').on('click', '.delete-button', function(){
+            event.preventDefault();
+            console.log('delete button works and response.');
+        })
+    }
+
+    function handleCancelButton(){
+        $('.edit').on('click', '.cancel', function(){
+            event.preventDefault();
+            console.log('cancel button works and responds.');
         });
     }
 
+    function handleSubmitButton(){
+        $('.edit').on('click', '.submit', function(){
+            event.preventDefault();
+            console.log('submit button works and responds.');
+        });
+    }
 
+    function listenerFunctionBinder(){
+        handleAddButton();
+        handleEditButton();
+        handleDeleteButton();
+        handleCancelButton();
+        handleSubmitButton();
+    }
     function render() {
         const addFilter = generateAddSortButtons();
         const bookMarks = store.items.map(bookMark => bookMarkList.generateBookMark(bookMark));
@@ -78,13 +112,14 @@ const bookMarkList = (function(){
     return {
         generateBookMark,
         generateAddSortButtons,
-        handleAddButton,
+        listenerFunctionBinder,
         render
     };
 }());
 
 bookMarkList.render();
-bookMarkList.handleAddButton();
+bookMarkList.listenerFunctionBinder();
+
 
 
 
