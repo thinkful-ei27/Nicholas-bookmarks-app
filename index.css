@@ -1,0 +1,24 @@
+Header {
+  background-color: lightpink;
+  text-align: center;
+}
+body {
+  background-color: lightsalmon;
+  margin: 0;
+  padding: 0;
+  
+}
+
+.container {
+  text-align: center;
+}
+
+.add-rating {
+  background-color: lightcoral;
+  text-align: center;
+}
+
+.bookmark {
+  text-align: center;
+  background-color: lightgoldenrodyellow;
+}
