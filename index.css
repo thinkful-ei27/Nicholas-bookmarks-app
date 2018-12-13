@@ -6,7 +6,7 @@ body {
   background-color: lightsalmon;
   margin: 0;
   padding: 0;
-  
+
 }
 
 .container {
@@ -21,4 +21,8 @@ body {
 .bookmark {
   text-align: center;
   background-color: lightgoldenrodyellow;
+}
+
+form {
+  background-color: lightcyan;
 }

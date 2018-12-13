@@ -11,6 +11,26 @@
     <header role = 'banner'>
         <h1>Thinkful's Book of Marks</h1>
     </header>
+    <div role = 'container' id = 'input later' class ='container createMark'>
+        <form id = "js-createMark">
+          <h2>Create a new Bookmark!</h2>
+          <label for = "name">Name</label>
+          <input type = "text" id="createName" name ="name">
+          <label>Rating</label>
+            <select>           
+                <option value="1">1 Star</option>
+                <option value="2">2 Stars</option>
+                <option value="3">3 Stars</option>
+                <option value="4">4 Stars</option>
+                <option value="5">5 Stars</option> 
+            </select>
+            <label  for = "description">Description</label>
+            <input type = "text" id="createDescription" name="description">
+            <label for ="URL"> URL:</label>
+            <input type = "text" id="createURL" name="URL">
+            <button class = "submit">Submit (book)Mark</button>
+        </form>
+    </div>
     <div role = 'container' id = 'input later' class ='bookmark'>
         <h3>Title of Bookmark</h3>
         <p role = 'rating'>****</p>
