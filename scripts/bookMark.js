@@ -63,11 +63,11 @@ const bookMarkList = (function(){
     if(store.addObject){
       store.resetBookMarksEdit();
       store.setEraseAddFilterMarkTrue();
-      return `<div role = 'container' id = 'input later' class ='container createMark'>
-          <form id = "js-createMark">
+      return `<div role='container' id='input later' class='container createMark'>
+          <form id="js-createMark">
             <h2>Create a new Bookmark!</h2>
-            <label for = "name">Name</label>
-            <input type = "text" id="createName" name ="name">
+            <label for="name">Name</label>
+            <input type="text" id="createName" name="name">
             <label>Rating</label>
               <select>           
                   <option value="1">1 Star</option>
@@ -76,12 +76,12 @@ const bookMarkList = (function(){
                   <option value="4">4 Stars</option>
                   <option value="5">5 Stars</option> 
               </select>
-              <label  for = "description">Description</label>
-              <input type = "text" id="createDescription" name="description">
-              <label for ="URL"> URL:</label>
-              <input type = "text" id="createURL" name="URL">
-              <button class = "cancel">Cancel</button>
-              <button class = "submit">Submit (book)Mark</button>
+              <label for ="description">Description</label>
+              <input type="text" id="createDescription" name="description">
+              <label for="URL"> URL:</label>
+              <input type="text" id="createURL" name="URL">
+              <button class="cancel">Cancel</button>
+              <button class="submit">Submit (book)Mark</button>
           </form>
       </div>`;
     } else return '';
@@ -120,13 +120,19 @@ const bookMarkList = (function(){
     });
   }
 
-  //consider changing to submit
+  
   function handleSubmitButton(){
     $('.master').on('click', '.submit', function(){
       event.preventDefault();
-      console.log('submit button works and responds.');
+      let newName = $('#createName').val();
+      let newDesc = $('#createDescription').val();
+      let newUrl = $('#createURL').val();
+      let newRating = $('select').val();
+      console.log({title: newName, url: newUrl, rating: newRating, desc: newDesc});
     });
   }
+  //{title: 'MarkBook', url:'www.google.com', desc: 'This is a bookmark', 
+  //rating: 3, id: '34509sdjsdfgike093245', expanded: true, edit: true}
 
   //next in line is listening for a change in the filter
 
