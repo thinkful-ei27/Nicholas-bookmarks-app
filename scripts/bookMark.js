@@ -139,9 +139,9 @@ const bookMarkList = (function(){
       let newDesc = $('#createDescription').val();
       let newUrl = $('#createURL').val();
       let newRating = $('select').val();
-      api.createItem({title: newName, url: newUrl, rating: newRating, desc: newDesc});
-      api.getItems(function(item){
-        store.setStoreItems(item);
+      api.createItem({title: newName, url: newUrl, rating: newRating, desc: newDesc}, function(newBookMark){
+        //move the below to store
+        store.addNewItemToStore(store.addValuesToNewItem(newBookMark));
         bookMarkList.render(store.items);
       });
     });

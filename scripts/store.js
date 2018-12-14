@@ -35,6 +35,16 @@ const store = (function(){
       store.eraseAddFilterMark = true;
   }
 
+  function addValuesToNewItem(newItem){
+    newItem['expanded'] = false;
+    newItem['edit'] = false;
+    return newItem;
+  }
+
+  function addNewItemToStore(newItem){
+    store.items.push(newItem);
+  }
+
   function setEraseAddFilterMarkFalse(){
       store.eraseAddFilterMark = false;
   }
@@ -65,6 +75,8 @@ const store = (function(){
     setStoreItems,
     setAddObjectTrue,
     setEraseAddFilterMarkFalse,
-    deleteById
+    deleteById,
+    addValuesToNewItem,
+    addNewItemToStore
   };
 }());
