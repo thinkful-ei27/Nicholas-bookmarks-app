@@ -106,6 +106,7 @@ const bookMarkList = (function(){
   function handleEditButton() {
     $('.master').on('click', '.edit-button', function(){
       event.preventDefault();
+      event.stopPropagation();
       console.log('edit button works and responds.');
     });
   }
@@ -114,6 +115,7 @@ const bookMarkList = (function(){
   function handleDeleteButton(){
     $('.master').on('click', '.delete-button', function(){
       event.preventDefault();
+      event.stopPropagation();
       const itemId = getItemIdFromElement(event.target);
       api.deleteItem(itemId, function(){
         store.deleteById(itemId);
@@ -146,11 +148,18 @@ const bookMarkList = (function(){
       });
     });
   }
+  
+  //handleExpandedClick... master... container? stopPropogation?
 
-
-  //next in line is listening for a change in the filter
-
-  //listen on change events
+  function handleExpandedClick(){
+    $('.master').on('click', '.bookmark', function(){
+      event.stopPropagation();
+      const itemId = getItemIdFromElement(event.target);
+      store.resetExpandById(itemId);
+      render(store.items);
+    });
+  }
+  
   function handleFilterRating(){
     $('.master').on('change', '.filterRatingSelect', function(){
       event.preventDefault();
@@ -166,6 +175,7 @@ const bookMarkList = (function(){
     handleCancelButton();
     handleSubmitButton();
     handleFilterRating();
+    handleExpandedClick();
   }
   function render(bookMarks) {
     

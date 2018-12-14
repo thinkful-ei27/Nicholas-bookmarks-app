@@ -27,6 +27,13 @@ const store = (function(){
     return result;
   }
 
+  function resetExpandById(itemId){
+    let currentIndex = store.items.findIndex(function(element){
+      return element.id === itemId;
+    });
+    store.items[currentIndex].expanded = !store.items[currentIndex].expanded;
+  }
+
   function resetBookMarksEdit(){
       store.items.forEach(item => item.edit = false);
   }
@@ -77,6 +84,7 @@ const store = (function(){
     setEraseAddFilterMarkFalse,
     deleteById,
     addValuesToNewItem,
-    addNewItemToStore
+    addNewItemToStore,
+    resetExpandById
   };
 }());
