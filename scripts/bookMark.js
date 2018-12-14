@@ -34,7 +34,16 @@ const bookMarkList = (function(){
         <button class = 'delete-button'>Delete (book)Mark</button>
       </div>`;
   }
-
+  
+  function errorAddHTML(){
+    if(store.sErr !== ''){
+      const errorHTML = `<div role='container' class='container error'>
+      <p><span>${store.sErr}<span><p>
+      </div>`;
+      store.sErr = '';
+      return errorHTML;
+    } else return '';
+  }
   function bookMarkEditHTML(bookMarks){
     return `<div role='container' data-item-id="${bookMarks.id}" class='bookmark edit'>
         <form id="js-editMark">
@@ -145,7 +154,8 @@ const bookMarkList = (function(){
         store.addNewItemToStore(store.addValuesToNewItem(newBookMark));
         bookMarkList.render(store.items);
       }, function(error){
-        console.log(error.responseJSON.message);
+        store.sErr = error.responseJSON.message;
+        render(store.items);
       });
     });
   }
@@ -179,18 +189,19 @@ const bookMarkList = (function(){
     handleExpandedClick();
   }
   function render(bookMarks) {
-    
+    const errMessage = errorAddHTML();
     const addItem = bookMarkAddHTML();
     const addFilter = generateAddSortButtons();
     const displayedItems = bookMarks.map(bookMark => bookMarkList.generateBookMark(bookMark));
-    const totalDisplayed = addItem + addFilter + displayedItems;
+    const totalDisplayed = errMessage + addItem + addFilter + displayedItems;
     $('.master').html(totalDisplayed);
   }
   return {
-    generateBookMark,
-    generateAddSortButtons,
-    listenerFunctionBinder,
-    render
+    generateBookMark, //probably can remove
+    generateAddSortButtons, //probably can remove
+    listenerFunctionBinder, //DON'T REMOVE
+    render, //DON'T REMOVE
+    errorAddHTML //probably can remove
   };
 }());
 
