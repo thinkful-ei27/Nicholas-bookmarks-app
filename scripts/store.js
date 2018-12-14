@@ -30,6 +30,10 @@ const store = (function(){
       store.addObject = !store.addObject;
   }
 
+  function setStoreItems(item){
+      store.items = item;
+  }
+
   return {
     items,
     eraseAddFilterMark,
@@ -40,6 +44,7 @@ const store = (function(){
     addObject,
     resetBookMarksEdit,
     resetAddObject,
-    setEraseAddFilterMarkTrue
+    setEraseAddFilterMarkTrue,
+    setStoreItems
   };
 }());

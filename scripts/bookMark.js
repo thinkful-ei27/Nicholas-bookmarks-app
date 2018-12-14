@@ -106,10 +106,12 @@ const bookMarkList = (function(){
     });
   }
 
+  //NOT COMPLETED. Need to find itemID
   function handleDeleteButton(){
     $('.master').on('click', '.delete-button', function(){
       event.preventDefault();
-      console.log('delete button works and response.');
+
+      api.deleteItem(itemId);
     });
   }
 
@@ -120,7 +122,6 @@ const bookMarkList = (function(){
       render(store.items);
     });
   }
-
   
   function handleSubmitButton(){
     $('.master').on('click', '.submit', function(){
@@ -168,6 +169,7 @@ const bookMarkList = (function(){
   };
 }());
 
+console.log(api.getItems());
 bookMarkList.render(store.items);
 bookMarkList.listenerFunctionBinder();
 
