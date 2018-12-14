@@ -142,9 +142,10 @@ const bookMarkList = (function(){
       let newUrl = $('#createURL').val();
       let newRating = $('select').val();
       api.createItem({title: newName, url: newUrl, rating: newRating, desc: newDesc}, function(newBookMark){
-        //move the below to store
         store.addNewItemToStore(store.addValuesToNewItem(newBookMark));
         bookMarkList.render(store.items);
+      }, function(error){
+        console.log(error.responseJSON.message);
       });
     });
   }
