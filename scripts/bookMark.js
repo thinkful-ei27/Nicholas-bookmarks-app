@@ -20,6 +20,7 @@ const bookMarkList = (function(){
         </div>`;
     } else return '';
   }
+
   //${store.displayRating === 1 ? 'selected' : ''} (Want to use this to have it pre-select the current value...)
   function bookMarkHTML(bookMarks){
     return `<div role ='container' data-item-id="${bookMarks.id}" class ='bookmark no-edit'>
@@ -51,14 +52,6 @@ const bookMarkList = (function(){
             <h2>Edit your (book)Mark</h2>
             <label for="name">Title</label>
             <input type="text" id="editName" name="name">
-            <label for="rating">Rating</label>
-              <select name="rating">           
-                  <option value="1">1 Star</option>
-                  <option value="2">2 Stars</option>
-                  <option value="3">3 Stars</option>
-                  <option value="4">4 Stars</option>
-                  <option value="5">5 Stars</option> 
-              </select>
             <label  for="description">Description</label>
             <input type="text" id="editDescription" name="description">
             <label for="URL"> URL:</label>
@@ -68,7 +61,7 @@ const bookMarkList = (function(){
     </div>`;
   }
 
-//<button class="cancel-changes">Cancel</button>
+  //<button class="cancel-changes">Cancel</button>
 
   function bookMarkAddHTML(){
     if(store.addObject){
@@ -149,7 +142,7 @@ const bookMarkList = (function(){
   function handleSubmitChanges(){
     $('.master').on('submit', '.edit-form', function(event){
       event.preventDefault();
-      let editName = $('#editName').val(); //ternary operators?
+      let editName = $('#editName').val();
       let editDesc = $('#editDescription').val();
       let editUrl = $('#editURL').val();
       let editObj = {title: editName, desc: editDesc, url: editUrl};
@@ -160,9 +153,10 @@ const bookMarkList = (function(){
           store.setStoreItems(item);
           bookMarkList.render(store.items);
         });
-      }), function(error){
-        console.log(error);
-      };
+      }, function(error){
+        store.sErr = error.responseJSON.message;
+        render(store.items);
+      });
     });
   }
   
@@ -185,7 +179,7 @@ const bookMarkList = (function(){
     });
   }
   
-//Always activating, set this to a button 
+
   function handleExpandedClick(){
     $('.master').on('click', '.expand-button', function(event){
       event.stopPropagation();
