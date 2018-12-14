@@ -158,7 +158,10 @@ const bookMarkList = (function(){
       let id = getItemIdFromElement(event.target);
       api.patchItem(id, editObj, function(element){
         store.replaceById(id, element);
-        render(store.items);
+        api.getItems(function(item){
+          store.setStoreItems(item);
+          bookMarkList.render(store.items);
+        });
       }), function(eMessage){
         console.log(eMessage);
       };
