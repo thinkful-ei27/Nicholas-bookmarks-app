@@ -129,7 +129,7 @@ const bookMarkList = (function(){
       let newDesc = $('#createDescription').val();
       let newUrl = $('#createURL').val();
       let newRating = $('select').val();
-      console.log({title: newName, url: newUrl, rating: newRating, desc: newDesc});
+      api.createItem({title: newName, url: newUrl, rating: newRating, desc: newDesc}, console.log('I work!'));
     });
   }
 
