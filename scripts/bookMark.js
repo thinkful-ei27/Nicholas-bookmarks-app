@@ -24,6 +24,7 @@ const bookMarkList = (function(){
   function bookMarkHTML(bookMarks){
     return `<div role ='container' data-item-id="${bookMarks.id}" class ='bookmark no-edit'>
         <h3>${bookMarks.title}</h3>
+        <button class='expand-button'>Expand</button>
         <p role = 'rating'>${bookMarks.rating} stars</p>`
         + 
         (bookMarks.expanded ? 
@@ -147,7 +148,7 @@ const bookMarkList = (function(){
   }
   
   function handleSubmitChanges(){
-    $('.master').on('click', '.submit-changes', function(event){
+    $('.master').on('submit', '.edit-form', function(event){
       event.preventDefault();
       console.log('the form submitted');
       let editName = $('#editName').val(); //ternary operators?
@@ -183,9 +184,9 @@ const bookMarkList = (function(){
     });
   }
   
-
+//Always activating, set this to a button 
   function handleExpandedClick(){
-    $('.master').on('click', '.bookmark', function(event){
+    $('.master').on('click', '.expand-button', function(event){
       event.stopPropagation();
       const itemId = getItemIdFromElement(event.target);
       store.resetExpandById(itemId);
