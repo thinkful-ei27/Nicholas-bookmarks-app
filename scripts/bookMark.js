@@ -91,8 +91,8 @@ const bookMarkList = (function(){
               <input type="text" id="createDescription" name="description">
               <label for="URL"> URL:</label>
               <input type="text" id="createURL" name="URL" value="https://">
-              <button class="cancel">Cancel</button>
-              <button class="submit">Submit (book)Mark</button>
+              <button class="cancel" role='cancel'>Cancel</button>
+              <button class="submit" role='submit'>Submit (book)Mark</button>
           </form>
       </div>`;
     } else return '';
@@ -119,7 +119,6 @@ const bookMarkList = (function(){
       event.preventDefault();
       //event.stopPropagation();
       store.setItemEditTrue(getItemIdFromElement(event.target));
-      console.log('Edit button clicked');
       render(store.items);
     });
   }
@@ -150,7 +149,6 @@ const bookMarkList = (function(){
   function handleSubmitChanges(){
     $('.master').on('submit', '.edit-form', function(event){
       event.preventDefault();
-      console.log('the form submitted');
       let editName = $('#editName').val(); //ternary operators?
       let editDesc = $('#editDescription').val();
       let editUrl = $('#editURL').val();
@@ -162,8 +160,8 @@ const bookMarkList = (function(){
           store.setStoreItems(item);
           bookMarkList.render(store.items);
         });
-      }), function(eMessage){
-        console.log(eMessage);
+      }), function(error){
+        console.log(error);
       };
     });
   }
@@ -237,7 +235,4 @@ api.getItems(function(item){
   bookMarkList.render(store.items);
 });
 bookMarkList.listenerFunctionBinder();
-
-
-
 
