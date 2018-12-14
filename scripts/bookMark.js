@@ -116,7 +116,8 @@ const bookMarkList = (function(){
   function handleCancelButton(){
     $('.master').on('click', '.cancel', function(){
       event.preventDefault();
-      console.log('cancel button works and responds.');
+      store.resetAddObject();
+      render(store.items);
     });
   }
 
@@ -131,8 +132,7 @@ const bookMarkList = (function(){
       console.log({title: newName, url: newUrl, rating: newRating, desc: newDesc});
     });
   }
-  //{title: 'MarkBook', url:'www.google.com', desc: 'This is a bookmark', 
-  //rating: 3, id: '34509sdjsdfgike093245', expanded: true, edit: true}
+
 
   //next in line is listening for a change in the filter
 
