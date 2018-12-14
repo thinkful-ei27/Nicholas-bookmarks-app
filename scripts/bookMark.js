@@ -3,13 +3,14 @@
 const bookMarkList = (function(){
 
   function generateAddSortButtons(){
-    if(!store.erasedAddFilterMark){
+    if(!store.eraseAddFilterMark){
       return `<div role ='container' class ='wide container add-rating'>
             <button class='add-button'>Add (book)Mark</button>
             <form>
-                <label>Display Ratings Above:</label>
-                <select id='filterRatingSelect' class='filterRatingSelect'>           
-                    <option value="1" selected="selected">1 Star</option>
+                <label>Display Ratings At & Above:</label>
+                <select id='filterRatingSelect' class='filterRatingSelect'>         
+                    <option value="">Please select a rating</option>
+                    <option value="1">1 Star</option>
                     <option value="2">2 Stars</option>
                     <option value="3">3 Stars</option>
                     <option value="4">4 Stars</option>
@@ -17,8 +18,9 @@ const bookMarkList = (function(){
                 </select>
             </form>
         </div>`;
-    }
+    } else return '';
   }
+  //${store.displayRating === 1 ? 'selected' : ''} (Want to use this to have it pre-select the current value...)
   function bookMarkHTML(bookMarks){
     return `<div role ='container' id="${bookMarks.id}" class ='bookmark no-edit'>
         <h3>${bookMarks.title}</h3>
@@ -57,6 +59,34 @@ const bookMarkList = (function(){
     </div>`;
   }
 
+  function bookMarkAddHTML(){
+    if(store.addObject){
+      store.resetBookMarksEdit();
+      store.setEraseAddFilterMarkTrue();
+      return `<div role = 'container' id = 'input later' class ='container createMark'>
+          <form id = "js-createMark">
+            <h2>Create a new Bookmark!</h2>
+            <label for = "name">Name</label>
+            <input type = "text" id="createName" name ="name">
+            <label>Rating</label>
+              <select>           
+                  <option value="1">1 Star</option>
+                  <option value="2">2 Stars</option>
+                  <option value="3">3 Stars</option>
+                  <option value="4">4 Stars</option>
+                  <option value="5">5 Stars</option> 
+              </select>
+              <label  for = "description">Description</label>
+              <input type = "text" id="createDescription" name="description">
+              <label for ="URL"> URL:</label>
+              <input type = "text" id="createURL" name="URL">
+              <button class = "cancel">Cancel</button>
+              <button class = "submit">Submit (book)Mark</button>
+          </form>
+      </div>`;
+    } else return '';
+  }
+
   function generateBookMark(bookMarks){
     return bookMarks.edit ? bookMarkEditHTML(bookMarks) : bookMarkHTML(bookMarks);
   }
@@ -64,7 +94,8 @@ const bookMarkList = (function(){
   function handleAddButton() {
     $('.master').on('click', '.add-button', function(){
       event.preventDefault();
-      console.log('Add Button Works and Responds');
+      store.resetAddObject();
+      render(store.items);
     });
   }
     
@@ -104,7 +135,7 @@ const bookMarkList = (function(){
     $('.master').on('change', '.filterRatingSelect', function(){
       event.preventDefault();
       store.setDisplayRating($('.filterRatingSelect').val());
-      console.log(store.displayRating);
+      render(store.filterStoreByRating(store.items));
     });
   }
 
@@ -117,9 +148,10 @@ const bookMarkList = (function(){
     handleFilterRating();
   }
   function render(bookMarks) {
+    const addItem = bookMarkAddHTML();
     const addFilter = generateAddSortButtons();
     const displayedItems = bookMarks.map(bookMark => bookMarkList.generateBookMark(bookMark));
-    const totalDisplayed = addFilter + displayedItems;
+    const totalDisplayed = addItem + addFilter + displayedItems;
     $('.master').html(totalDisplayed);
   }
   return {
