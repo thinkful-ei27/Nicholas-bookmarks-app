@@ -21,8 +21,8 @@ const api =(function(){
     });
   }
 
-  function getItems(callback){
-    $.getJSON(`${BASE_URL}/bookmarks`, callback);
+  function getItems(callback, callback2){
+    $.getJSON(`${BASE_URL}/bookmarks`, callback, callback2);
   }
 
 

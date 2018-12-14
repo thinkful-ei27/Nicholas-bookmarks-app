@@ -11,6 +11,13 @@ const store = (function(){
   let displayRating = 1;
   let sErr = '';
 
+  function deleteById(itemId){
+    let currentIndex = store.items.findIndex(function(element){
+      return element.id === itemId;
+    });
+    store.items.splice(currentIndex, 1);
+  }
+
   function setDisplayRating(value){
     store.displayRating = value;
   }
@@ -57,6 +64,7 @@ const store = (function(){
     setEraseAddFilterMarkTrue,
     setStoreItems,
     setAddObjectTrue,
-    setEraseAddFilterMarkFalse
+    setEraseAddFilterMarkFalse,
+    deleteById
   };
 }());

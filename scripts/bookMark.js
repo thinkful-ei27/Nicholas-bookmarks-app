@@ -24,7 +24,7 @@ const bookMarkList = (function(){
   function bookMarkHTML(bookMarks){
     return `<div role ='container' data-item-id="${bookMarks.id}" class ='bookmark no-edit'>
         <h3>${bookMarks.title}</h3>
-        <p role = 'rating'>${bookMarks.rating}</p>`
+        <p role = 'rating'>${bookMarks.rating} stars</p>`
         + 
         (bookMarks.expanded ? 
           `<p>${bookMarks.desc}</p>
@@ -110,14 +110,13 @@ const bookMarkList = (function(){
     });
   }
 
-  //NOT COMPLETED. Need to find itemID
+  
   function handleDeleteButton(){
     $('.master').on('click', '.delete-button', function(){
       event.preventDefault();
       const itemId = getItemIdFromElement(event.target);
-      console.log(itemId);
       api.deleteItem(itemId, function(){
-        //store.deleteById
+        store.deleteById(itemId);
         render(store.items);
       });
     });
@@ -126,6 +125,7 @@ const bookMarkList = (function(){
   function handleCancelButton(){
     $('.master').on('click', '.cancel', function(){
       event.preventDefault();
+      event.stopPropagation();
       store.setAddObjectFalse();
       store.setEraseAddFilterMarkFalse();
       render(store.items);
@@ -139,9 +139,9 @@ const bookMarkList = (function(){
       let newDesc = $('#createDescription').val();
       let newUrl = $('#createURL').val();
       let newRating = $('select').val();
-      api.createItem({title: newName, url: newUrl, rating: newRating, desc: newDesc}, console.log('I work!'));
-      api.getItems(item => store.setStoreItems(item));
-      render(store.items);
+      api.createItem({title: newName, url: newUrl, rating: newRating, desc: newDesc});
+      api.getItems(item => store.setStoreItems(item), render(store.items));
+      
     });
   }
 
@@ -165,12 +165,11 @@ const bookMarkList = (function(){
     handleSubmitButton();
     handleFilterRating();
   }
-  function render() {
-    api.getItems(item => store.setStoreItems(item));
-    console.log(store);
+  function render(bookMarks) {
+    
     const addItem = bookMarkAddHTML();
     const addFilter = generateAddSortButtons();
-    const displayedItems = store.items.map(bookMark => bookMarkList.generateBookMark(bookMark));
+    const displayedItems = bookMarks.map(bookMark => bookMarkList.generateBookMark(bookMark));
     const totalDisplayed = addItem + addFilter + displayedItems;
     $('.master').html(totalDisplayed);
   }
@@ -182,7 +181,8 @@ const bookMarkList = (function(){
   };
 }());
 
-bookMarkList.render();
+api.getItems(item => store.items = item);
+bookMarkList.render(store.items);
 bookMarkList.listenerFunctionBinder();
 
 
