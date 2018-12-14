@@ -4,8 +4,8 @@ const bookMarkList = (function(){
 
   function generateAddSortButtons(){
     if(!store.erasedAddFilterMark){
-      return `<div role = 'container' class = 'wide container add-rating'>
-            <button>Add (book)Mark</button>
+      return `<div role ='container' class ='wide container add-rating'>
+            <button class='add-button'>Add (book)Mark</button>
             <form>
                 <label>Display Ratings Above:</label>
                 <select id='filterRatingSelect' class='filterRatingSelect'>           
@@ -26,7 +26,7 @@ const bookMarkList = (function(){
         + 
         (bookMarks.expanded ? 
           `<p>${bookMarks.desc}</p>
-        <button href=${bookMarks.url}>(book)Mark URL</button>` : '') 
+        <button><a href=${bookMarks.url}>(book)Mark URL</a></button>` : '') 
         + 
         `<button class = 'edit-button'>Edit (book)Mark</button>
         <button class = 'delete-button'>Delete (book)Mark</button>
@@ -62,7 +62,7 @@ const bookMarkList = (function(){
   }
 
   function handleAddButton() {
-    $('.add-rating').on('click', 'button', function(){
+    $('.master').on('click', '.add-button', function(){
       event.preventDefault();
       console.log('Add Button Works and Responds');
     });
@@ -101,9 +101,9 @@ const bookMarkList = (function(){
 
   //listen on change events
   function handleFilterRating(){
-    $('#filterRatingSelect').change(function(){
+    $('.master').on('change', '.filterRatingSelect', function(){
       event.preventDefault();
-      store.setDisplayRating($('#filterRatingSelect').val());
+      store.setDisplayRating($('.filterRatingSelect').val());
       console.log(store.displayRating);
     });
   }
@@ -116,11 +116,11 @@ const bookMarkList = (function(){
     handleSubmitButton();
     handleFilterRating();
   }
-  function render() {
+  function render(bookMarks) {
     const addFilter = generateAddSortButtons();
-    const bookMarks = store.items.map(bookMark => bookMarkList.generateBookMark(bookMark));
-    $('.master').append(addFilter);
-    $('.master').append(bookMarks);
+    const displayedItems = bookMarks.map(bookMark => bookMarkList.generateBookMark(bookMark));
+    const totalDisplayed = addFilter + displayedItems;
+    $('.master').html(totalDisplayed);
   }
   return {
     generateBookMark,
@@ -130,7 +130,7 @@ const bookMarkList = (function(){
   };
 }());
 
-bookMarkList.render();
+bookMarkList.render(store.items);
 bookMarkList.listenerFunctionBinder();
 
 
