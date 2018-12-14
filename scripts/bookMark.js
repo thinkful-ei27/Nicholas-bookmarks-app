@@ -46,12 +46,12 @@ const bookMarkList = (function(){
   }
   function bookMarkEditHTML(bookMarks){
     return `<div role='container' data-item-id="${bookMarks.id}" class='container bookmark edit'>
-        <form id="js-editMark">
+        <form class='edit-form'>
             <h2>Edit your (book)Mark</h2>
             <label for="name">Title</label>
             <input type="text" id="editName" name="name">
-            <label>Rating</label>
-              <select>           
+            <label for="rating">Rating</label>
+              <select name="rating">           
                   <option value="1">1 Star</option>
                   <option value="2">2 Stars</option>
                   <option value="3">3 Stars</option>
@@ -62,11 +62,12 @@ const bookMarkList = (function(){
             <input type="text" id="editDescription" name="description">
             <label for="URL"> URL:</label>
             <input type="text" id="editURL" name="URL" value="https://">
-            <button class="cancel-changes">Cancel</button>
-            <button class="submit-changes">Submit Changes</button>
+            <button class="submit-changes" type='submit'>Submit Changes</button>
           </form>
     </div>`;
   }
+
+//<button class="cancel-changes">Cancel</button>
 
   function bookMarkAddHTML(){
     if(store.addObject){
@@ -115,7 +116,7 @@ const bookMarkList = (function(){
   function handleEditButton() {
     $('.master').on('click', '.edit-button', function(){
       event.preventDefault();
-      event.stopPropagation();
+      //event.stopPropagation();
       store.setItemEditTrue(getItemIdFromElement(event.target));
       console.log('Edit button clicked');
       render(store.items);
@@ -126,7 +127,7 @@ const bookMarkList = (function(){
   function handleDeleteButton(){
     $('.master').on('click', '.delete-button', function(){
       event.preventDefault();
-      event.stopPropagation();
+      //event.stopPropagation();
       const itemId = getItemIdFromElement(event.target);
       api.deleteItem(itemId, function(){
         store.deleteById(itemId);
@@ -138,7 +139,7 @@ const bookMarkList = (function(){
   function handleCancelButton(){
     $('.master').on('click', '.cancel', function(){
       event.preventDefault();
-      event.stopPropagation();
+      //event.stopPropagation();
       store.setAddObjectFalse();
       store.setEraseAddFilterMarkFalse();
       render(store.items);
@@ -146,9 +147,9 @@ const bookMarkList = (function(){
   }
   
   function handleSubmitChanges(){
-    $('.master').on('click', '.submit-changes', function(){
+    $('.master').on('click', '.submit-changes', function(event){
       event.preventDefault();
-      event.stopPropagation();
+      console.log('the form submitted');
       let editName = $('#editName').val(); //ternary operators?
       let editDesc = $('#editDescription').val();
       let editUrl = $('#editURL').val();
@@ -165,8 +166,9 @@ const bookMarkList = (function(){
   
 
   function handleSubmitButton(){
-    $('.master').on('click', '.submit', function(){
+    $('.master').on('click', '.submit', function(event){
       event.preventDefault();
+      event.stopPropagation();
       let newName = $('#createName').val();
       let newDesc = $('#createDescription').val();
       let newUrl = $('#createURL').val();
@@ -181,10 +183,9 @@ const bookMarkList = (function(){
     });
   }
   
-  //handleExpandedClick... master... container? stopPropogation?
 
   function handleExpandedClick(){
-    $('.master').on('click', '.bookmark', function(){
+    $('.master').on('click', '.bookmark', function(event){
       event.stopPropagation();
       const itemId = getItemIdFromElement(event.target);
       store.resetExpandById(itemId);

@@ -32,7 +32,7 @@ const api =(function(){
       url: `${BASE_URL}/bookmarks/${id}`,
       method: 'PATCH',
       contentType: 'application/json',
-      data: obj,
+      data: JSON.stringify(obj),
       success: callback,
       error: eCallback
     });
