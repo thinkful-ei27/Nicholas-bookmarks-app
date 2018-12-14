@@ -22,7 +22,7 @@ const bookMarkList = (function(){
   }
   //${store.displayRating === 1 ? 'selected' : ''} (Want to use this to have it pre-select the current value...)
   function bookMarkHTML(bookMarks){
-    return `<div role ='container' id="${bookMarks.id}" class ='bookmark no-edit'>
+    return `<div role ='container' data-item-id="${bookMarks.id}" class ='bookmark no-edit'>
         <h3>${bookMarks.title}</h3>
         <p role = 'rating'>${bookMarks.rating}</p>`
         + 
@@ -36,7 +36,7 @@ const bookMarkList = (function(){
   }
 
   function bookMarkEditHTML(bookMarks){
-    return `<div role='container' id="${bookMarks.id}" class='bookmark edit'>
+    return `<div role='container' data-item-id="${bookMarks.id}" class='bookmark edit'>
         <form id="js-editMark">
             <h2>Edit your (book)Mark</h2>
             <label for="name">Title</label>
@@ -63,7 +63,7 @@ const bookMarkList = (function(){
     if(store.addObject){
       store.resetBookMarksEdit();
       store.setEraseAddFilterMarkTrue();
-      return `<div role='container' id='input later' class='container createMark'>
+      return `<div role='container' class='container createMark'>
           <form id="js-createMark">
             <h2>Create a new Bookmark!</h2>
             <label for="name">Name</label>
@@ -79,12 +79,16 @@ const bookMarkList = (function(){
               <label for ="description">Description</label>
               <input type="text" id="createDescription" name="description">
               <label for="URL"> URL:</label>
-              <input type="text" id="createURL" name="URL">
+              <input type="text" id="createURL" name="URL" value="https://">
               <button class="cancel">Cancel</button>
               <button class="submit">Submit (book)Mark</button>
           </form>
       </div>`;
     } else return '';
+  }
+
+  function getItemIdFromElement(item){
+    return $(item).closest('.bookmark').data('item-id');
   }
 
   function generateBookMark(bookMarks){
@@ -94,7 +98,7 @@ const bookMarkList = (function(){
   function handleAddButton() {
     $('.master').on('click', '.add-button', function(){
       event.preventDefault();
-      store.resetAddObject();
+      store.setAddObjectTrue();
       render(store.items);
     });
   }
@@ -110,15 +114,20 @@ const bookMarkList = (function(){
   function handleDeleteButton(){
     $('.master').on('click', '.delete-button', function(){
       event.preventDefault();
-
-      api.deleteItem(itemId);
+      const itemId = getItemIdFromElement(event.target);
+      console.log(itemId);
+      api.deleteItem(itemId, function(){
+        //store.deleteById
+        render(store.items);
+      });
     });
   }
 
   function handleCancelButton(){
     $('.master').on('click', '.cancel', function(){
       event.preventDefault();
-      store.resetAddObject();
+      store.setAddObjectFalse();
+      store.setEraseAddFilterMarkFalse();
       render(store.items);
     });
   }
@@ -131,6 +140,8 @@ const bookMarkList = (function(){
       let newUrl = $('#createURL').val();
       let newRating = $('select').val();
       api.createItem({title: newName, url: newUrl, rating: newRating, desc: newDesc}, console.log('I work!'));
+      api.getItems(item => store.setStoreItems(item));
+      render(store.items);
     });
   }
 
@@ -154,10 +165,12 @@ const bookMarkList = (function(){
     handleSubmitButton();
     handleFilterRating();
   }
-  function render(bookMarks) {
+  function render() {
+    api.getItems(item => store.setStoreItems(item));
+    console.log(store);
     const addItem = bookMarkAddHTML();
     const addFilter = generateAddSortButtons();
-    const displayedItems = bookMarks.map(bookMark => bookMarkList.generateBookMark(bookMark));
+    const displayedItems = store.items.map(bookMark => bookMarkList.generateBookMark(bookMark));
     const totalDisplayed = addItem + addFilter + displayedItems;
     $('.master').html(totalDisplayed);
   }
@@ -169,8 +182,7 @@ const bookMarkList = (function(){
   };
 }());
 
-console.log(api.getItems());
-bookMarkList.render(store.items);
+bookMarkList.render();
 bookMarkList.listenerFunctionBinder();
 
 

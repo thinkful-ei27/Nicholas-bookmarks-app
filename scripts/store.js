@@ -1,9 +1,11 @@
 'use strict';
 /* global, index, api*/
 
+/*title: 'MarkBook', url:'www.google.com', desc: 'This is a bookmark', rating: 3, id: '34509sdjsdfgike093245', expanded: true, edit: true},
+{title: 'Mark\'s Books', url: 'www.facebook.com', desc: 'cesspool', rating: 1, id: '435989ujdfnjk233r', expanded: true, edit: false}*/
+
 const store = (function(){
-  const items =[{title: 'MarkBook', url:'www.google.com', desc: 'This is a bookmark', rating: 3, id: '34509sdjsdfgike093245', expanded: true, edit: true},
-    {title: 'Mark\'s Books', url: 'www.facebook.com', desc: 'cesspool', rating: 1, id: '435989ujdfnjk233r', expanded: true, edit: false}];
+  const items =[];
   let eraseAddFilterMark = false;
   let addObject = false;
   let displayRating = 1;
@@ -26,8 +28,16 @@ const store = (function(){
       store.eraseAddFilterMark = true;
   }
 
-  function resetAddObject(){
-      store.addObject = !store.addObject;
+  function setEraseAddFilterMarkFalse(){
+      store.eraseAddFilterMark = false;
+  }
+
+  function setAddObjectFalse(){
+      store.addObject = false;
+  }
+
+  function setAddObjectTrue(){
+      store.addObject = true;
   }
 
   function setStoreItems(item){
@@ -43,8 +53,10 @@ const store = (function(){
     sErr,
     addObject,
     resetBookMarksEdit,
-    resetAddObject,
+    setAddObjectFalse,
     setEraseAddFilterMarkTrue,
-    setStoreItems
+    setStoreItems,
+    setAddObjectTrue,
+    setEraseAddFilterMarkFalse
   };
 }());

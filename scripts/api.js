@@ -16,14 +16,13 @@ const api =(function(){
     $.ajax({
       url: `${BASE_URL}/bookmarks/${id}`,
       method: 'DELETE',
+      contentType: 'application/json',
+      success: callback
     });
   }
 
-  function getItems(){
-    /*$.ajax({
-      url: `${BASE_URL}/bookmarks`,
-      method: 'GET'
-    });*/
+  function getItems(callback){
+    $.getJSON(`${BASE_URL}/bookmarks`, callback);
   }
 
 
@@ -32,5 +31,5 @@ const api =(function(){
       createItem,
       deleteItem,
       getItems
-  }
+  };
 }());
