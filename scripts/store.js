@@ -18,6 +18,13 @@ const store = (function(){
     store.items[iId].edit = true;
   }
 
+  function replaceById(itemId, editObj){
+    let currentIndex = store.items.findIndex(function(element){
+      return element.id === itemId;
+    });
+    store.items.splice(currentIndex, 1, editObj);
+  }
+
   function deleteById(itemId){
     let currentIndex = store.items.findIndex(function(element){
       return element.id === itemId;
@@ -93,6 +100,7 @@ const store = (function(){
     addValuesToNewItem,
     addNewItemToStore,
     resetExpandById,
-    setItemEditTrue
+    setItemEditTrue,
+    replaceById
   };
 }());

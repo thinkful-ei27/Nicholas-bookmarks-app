@@ -45,11 +45,11 @@ const bookMarkList = (function(){
     } else return '';
   }
   function bookMarkEditHTML(bookMarks){
-    return `<div role='container' data-item-id="${bookMarks.id}" class='bookmark edit'>
+    return `<div role='container' data-item-id="${bookMarks.id}" class='container bookmark edit'>
         <form id="js-editMark">
             <h2>Edit your (book)Mark</h2>
             <label for="name">Title</label>
-            <input type="text" id="createName" name ="name" value ="${bookMarks.title}">
+            <input type="text" id="editName" name="name">
             <label>Rating</label>
               <select>           
                   <option value="1">1 Star</option>
@@ -58,12 +58,12 @@ const bookMarkList = (function(){
                   <option value="4">4 Stars</option>
                   <option value="5">5 Stars</option> 
               </select>
-              <label  for="description">Description</label>
-              <input type="text" id="createDescription" name="description">
-              <label for="URL"> URL:</label>
-              <input type="text" id="createURL" name="URL">
-              <button class="cancel-changes">Cancel</button>
-              <button class="submit-changes">Submit Changes</button>
+            <label  for="description">Description</label>
+            <input type="text" id="editDescription" name="description">
+            <label for="URL"> URL:</label>
+            <input type="text" id="editURL" name="URL" value="https://">
+            <button class="cancel-changes">Cancel</button>
+            <button class="submit-changes">Submit Changes</button>
           </form>
     </div>`;
   }
@@ -117,6 +117,7 @@ const bookMarkList = (function(){
       event.preventDefault();
       event.stopPropagation();
       store.setItemEditTrue(getItemIdFromElement(event.target));
+      console.log('Edit button clicked');
       render(store.items);
     });
   }
@@ -147,7 +148,18 @@ const bookMarkList = (function(){
   function handleSubmitChanges(){
     $('.master').on('click', '.submit-changes', function(){
       event.preventDefault();
-      console.log('Submit Changes button clicks!');
+      event.stopPropagation();
+      let editName = $('#editName').val(); //ternary operators?
+      let editDesc = $('#editDescription').val();
+      let editUrl = $('#editURL').val();
+      let editObj = {title: editName, desc: editDesc, url: editUrl};
+      let id = getItemIdFromElement(event.target);
+      api.patchItem(id, editObj, function(element){
+        store.replaceById(id, element);
+        render(store.items);
+      }), function(eMessage){
+        console.log(eMessage);
+      };
     });
   }
   

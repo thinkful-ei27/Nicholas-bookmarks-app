@@ -26,20 +26,23 @@ const api =(function(){
   function getItems(callback){
     $.getJSON(`${BASE_URL}/bookmarks`, callback);
   }
-  /*
-  function patchItems(id, obj, callback){
+  
+  function patchItem(id, obj, callback, eCallback){
     $.ajax({
       url: `${BASE_URL}/bookmarks/${id}`,
       method: 'PATCH',
       contentType: 'application/json',
-      success: callback
+      data: obj,
+      success: callback,
+      error: eCallback
     });
   }
-*/
+
 
   return {
     createItem,
     deleteItem,
-    getItems
+    getItems,
+    patchItem
   };
 }());
