@@ -11,6 +11,13 @@ const store = (function(){
   let displayRating = 1;
   let sErr = '';
 
+  function setItemEditTrue(id){
+    let iId = store.items.findIndex(function(element){
+      return element.id === id;
+    });
+    store.items[iId].edit = true;
+  }
+
   function deleteById(itemId){
     let currentIndex = store.items.findIndex(function(element){
       return element.id === itemId;
@@ -85,6 +92,7 @@ const store = (function(){
     deleteById,
     addValuesToNewItem,
     addNewItemToStore,
-    resetExpandById
+    resetExpandById,
+    setItemEditTrue
   };
 }());

@@ -62,8 +62,8 @@ const bookMarkList = (function(){
               <input type="text" id="createDescription" name="description">
               <label for="URL"> URL:</label>
               <input type="text" id="createURL" name="URL">
-              <button class="cancel">Cancel</button>
-              <button class="submit">Submit (book)Mark</button>
+              <button class="cancel-changes">Cancel</button>
+              <button class="submit-changes">Submit Changes</button>
           </form>
     </div>`;
   }
@@ -116,7 +116,8 @@ const bookMarkList = (function(){
     $('.master').on('click', '.edit-button', function(){
       event.preventDefault();
       event.stopPropagation();
-      console.log('edit button works and responds.');
+      store.setItemEditTrue(getItemIdFromElement(event.target));
+      render(store.items);
     });
   }
 
@@ -143,6 +144,14 @@ const bookMarkList = (function(){
     });
   }
   
+  function handleSubmitChanges(){
+    $('.master').on('click', '.submit-changes', function(){
+      event.preventDefault();
+      console.log('Submit Changes button clicks!');
+    });
+  }
+  
+
   function handleSubmitButton(){
     $('.master').on('click', '.submit', function(){
       event.preventDefault();
@@ -187,6 +196,7 @@ const bookMarkList = (function(){
     handleSubmitButton();
     handleFilterRating();
     handleExpandedClick();
+    handleSubmitChanges();
   }
   function render(bookMarks) {
     const errMessage = errorAddHTML();
