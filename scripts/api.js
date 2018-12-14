@@ -9,7 +9,7 @@ const api =(function(){
       method: 'POST',
       contentType: 'application/json',
       data: newItem,
-      success: console.log('createItem posted to the survey')
+      success: callback
     });
   }
   function deleteItem(id, callback){
@@ -21,15 +21,24 @@ const api =(function(){
     });
   }
 
-  function getItems(callback, callback2){
-    $.getJSON(`${BASE_URL}/bookmarks`, callback, callback2);
+  function getItems(callback){
+    $.getJSON(`${BASE_URL}/bookmarks`, callback);
   }
 
+  function patchItems(id, obj, callback){
+    $.ajax({
+      url: `${BASE_URL}/bookmarks/${id}`,
+      method: 'PATCH',
+      contentType: 'application/json',
+      success: callback
+    });
+  }
 
 
   return {
       createItem,
       deleteItem,
-      getItems
+      getItems,
+      patchItems
   };
 }());

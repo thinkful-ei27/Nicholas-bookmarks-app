@@ -140,8 +140,10 @@ const bookMarkList = (function(){
       let newUrl = $('#createURL').val();
       let newRating = $('select').val();
       api.createItem({title: newName, url: newUrl, rating: newRating, desc: newDesc});
-      api.getItems(item => store.setStoreItems(item), render(store.items));
-      
+      api.getItems(function(item){
+        store.setStoreItems(item);
+        bookMarkList.render(store.items);
+      });
     });
   }
 
@@ -181,8 +183,10 @@ const bookMarkList = (function(){
   };
 }());
 
-api.getItems(item => store.items = item);
-bookMarkList.render(store.items);
+api.getItems(function(item){
+  store.setStoreItems(item);
+  bookMarkList.render(store.items);
+});
 bookMarkList.listenerFunctionBinder();
 
 
